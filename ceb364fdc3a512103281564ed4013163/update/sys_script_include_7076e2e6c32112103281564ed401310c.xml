@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1065829_city_wea.CityWeatherAPI</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>API to fetch weather data and push it to the city weather table</description>
+        <name>CityWeatherAPI</name>
+        <script><![CDATA[var CityWeatherAPI = Class.create();
+CityWeatherAPI.prototype = {
+    initialize: function() {},
+
+    getWeatherData: function(cityName) {
+        try {
+            // Initialize REST message
+            var restMessage = new sn_ws.RESTMessageV2('Open Weather API', 'GET');
+            
+            // Explicitly set the query parameter for city name and log it
+            restMessage.setStringParameterNoEscape('q', cityName);
+            gs.info("Fetching weather data for city: " + cityName); // Log city name for verification
+
+            // Execute the REST message
+            var response = restMessage.execute();
+            var responseBody = response.getBody();
+            gs.info("API Response: " + responseBody); // Log the API response for debugging
+            
+            var parsedData = JSON.parse(responseBody);
+
+            // Validate the API response contains the necessary fields
+            if (parsedData.cod !== 200 || !parsedData.main || !parsedData.weather || !parsedData.weather[0]) {
+                return "Failed to retrieve weather data for " + cityName + ". Please check the city name.";
+            }
+
+            // Insert data into the City Weather table if it doesn't already exist
+            var cityWeatherGR = new GlideRecord('x_1065829_city_wea_city_weather');
+            cityWeatherGR.addQuery('city_name', parsedData.name); // Check for duplicates by API name
+            cityWeatherGR.query();
+
+            if (cityWeatherGR.next()) {
+                return "Weather data for " + parsedData.name + " already exists.";
+            }
+
+            // Insert new data
+            cityWeatherGR.initialize();
+            cityWeatherGR.city_name = parsedData.name || 'N/A';
+            cityWeatherGR.temperature = parsedData.main.temp || 0;
+            cityWeatherGR.feels_like_temperature = parsedData.main.feels_like || 0;
+            cityWeatherGR.weather_description = parsedData.weather[0].description || 'N/A';
+            cityWeatherGR.humidity = parsedData.main.humidity || 0;
+            cityWeatherGR.wind_speed = parsedData.wind.speed || 0;
+            cityWeatherGR.cloudiness = parsedData.clouds.all || 0;
+            cityWeatherGR.last_updated = new GlideDateTime();
+            cityWeatherGR.insert();
+
+            return "Weather data for " + cityName + " has been saved successfully.";
+        } catch (error) {
+            gs.error("Error fetching weather data for city: " + cityName);
+            return "Failed to retrieve weather data.";
+        }
+    },
+
+    type: 'CityWeatherAPI'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-01 20:48:49</sys_created_on>
+        <sys_id>7076e2e6c32112103281564ed401310c</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>CityWeatherAPI</sys_name>
+        <sys_package display_value="City Weather Tracker" source="x_1065829_city_wea">ceb364fdc3a512103281564ed4013163</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="City Weather Tracker">ceb364fdc3a512103281564ed4013163</sys_scope>
+        <sys_update_name>sys_script_include_7076e2e6c32112103281564ed401310c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-01 23:55:50</sys_updated_on>
+    </sys_script_include>
+</record_update>

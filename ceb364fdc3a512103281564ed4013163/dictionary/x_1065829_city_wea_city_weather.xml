@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="b2052471c3e512103281564ed4013119" label="City Weather" max_length="40" name="x_1065829_city_wea_city_weather" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="City Name" max_length="40" name="city_name" type="string"/>
+        <element label="City Input" max_length="40" name="city_input" type="string"/>
+        <element label="Feels Like Temperature" max_length="15" name="feels_like_temperature" type="decimal"/>
+        <element label="Wind Speed" max_length="15" name="wind_speed" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Weather Description" max_length="200" name="weather_description" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <element label="Cloudiness" max_length="40" name="cloudiness" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Humidity" max_length="40" name="humidity" type="integer"/>
+        <element label="Temperature" max_length="15" name="temperature" type="decimal"/>
+        <index name="index">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

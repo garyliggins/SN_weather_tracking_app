@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_param_defs">
+    <sys_rest_message_fn_param_defs action="INSERT_OR_UPDATE">
+        <name>appid</name>
+        <order>100</order>
+        <rest_message_function display_value="GET">5f25e666c32112103281564ed4013180</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_param_defs</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-01 20:41:31</sys_created_on>
+        <sys_id>be456a66c32112103281564ed401314e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>appid</sys_name>
+        <sys_package display_value="City Weather Tracker" source="x_1065829_city_wea">ceb364fdc3a512103281564ed4013163</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="City Weather Tracker">ceb364fdc3a512103281564ed4013163</sys_scope>
+        <sys_update_name>sys_rest_message_fn_param_defs_be456a66c32112103281564ed401314e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-01 20:41:31</sys_updated_on>
+        <value>b770cd078d6d2270ff659c79f181ff8f</value>
+    </sys_rest_message_fn_param_defs>
+</record_update>
